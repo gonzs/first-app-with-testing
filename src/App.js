@@ -4,17 +4,18 @@ import "./App.css";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { counter: 0 };
+    this.state = { counter: 0, error: false };
   }
 
   onIncrement() {
-    this.setState((state) => ({ counter: state.counter + 1 }));
+    this.setState((state) => ({ counter: state.counter + 1, error: false }));
   }
 
   onDecrement() {
-    this.state.counter !== 0
-      ? this.setState((state) => ({ counter: state.counter - 1 }))
-      : console.log("Error");
+    const counter = this.state.counter;
+    counter > 0
+      ? this.setState((state) => ({ counter: counter - 1 }))
+      : this.setState((state) => ({ error: true }));
   }
 
   render() {
@@ -39,6 +40,11 @@ class App extends Component {
         >
           Decrement counter
         </button>
+        {this.state.error && (
+          <div attr-test="error-msg">
+            It's not possible decrement zero value
+          </div>
+        )}
       </div>
     );
   }
