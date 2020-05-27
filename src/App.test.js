@@ -42,7 +42,7 @@ test("renders counter display", () => {
   expect(counterDisplay.length).toBe(1);
 });
 
-test("counter starts at 0", () => {
+test("Counter starts at 0", () => {
   const wrapper = setup();
   const initialCounterState = wrapper.state("counter");
   expect(initialCounterState).toBe(0);
@@ -52,6 +52,7 @@ describe("Increment", () => {
   test("renders increment button", () => {
     const wrapper = setup();
     const button = findByTestAttr(wrapper, "increment-button");
+
     expect(button.length).toBe(1);
   });
 
@@ -62,8 +63,8 @@ describe("Increment", () => {
     const button = findByTestAttr(wrapper, "increment-button");
     button.simulate("click");
     wrapper.update();
-
     const counterDisplay = findByTestAttr(wrapper, "display-counter");
+
     expect(counterDisplay.text()).toContain(counter + 1);
   });
 });
@@ -72,6 +73,7 @@ describe("Decrement", () => {
   test("renders decrement button", () => {
     const wrapper = setup();
     const button = findByTestAttr(wrapper, "decrement-button");
+
     expect(button.length).toBe(1);
   });
 
@@ -82,8 +84,8 @@ describe("Decrement", () => {
     const button = findByTestAttr(wrapper, "decrement-button");
     button.simulate("click");
     wrapper.update();
-
     const counterDisplay = findByTestAttr(wrapper, "display-counter");
+
     expect(counterDisplay.text()).toContain(counter - 1);
   });
 });
@@ -91,6 +93,7 @@ describe("Decrement", () => {
 test("error message does not show when not needed", () => {
   const wrapper = setup();
   const message = findByTestAttr(wrapper, "error-msg");
+
   expect(message.exists()).toBeFalsy();
 });
 
@@ -109,8 +112,8 @@ describe("Counter is 0", () => {
     const button = findByTestAttr(wrapper, "decrement-button");
     button.simulate("click");
     wrapper.update();
-
     const message = findByTestAttr(wrapper, "error-msg");
+
     expect(wrapper.state().counter).toBeGreaterThanOrEqual(0);
     expect(counterDisplay.text()).toContain(counter);
     expect(message.length).toBe(1);
@@ -121,8 +124,8 @@ describe("Counter is 0", () => {
     const button = findByTestAttr(wrapper, "increment-button");
     button.simulate("click");
     wrapper.update();
-
     const counterDisplay = findByTestAttr(wrapper, "display-counter");
+
     expect(counterDisplay.text()).toContain(counter + 1);
     expect(message.exists()).toBeFalsy();
   });
