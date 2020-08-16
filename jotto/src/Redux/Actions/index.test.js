@@ -1,5 +1,5 @@
 import { correctGuess, getSecretWord } from "./";
-import { CORRECT_GUESS, SET_SECRET_WORD } from "./types";
+import { CORRECT_GUESS } from "./types";
 import moxios from "moxios";
 import { storeFactory } from "../../../test/testUtils";
 

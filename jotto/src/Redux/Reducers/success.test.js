@@ -1,5 +1,5 @@
 import { CORRECT_GUESS } from "../Actions/types";
-import successReducer from "./successReducer";
+import successReducer from "./success";
 
 test("returns default initial state of `false` when no action is passed", () => {
   const newState = successReducer(undefined, {});
