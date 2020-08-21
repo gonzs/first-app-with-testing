@@ -37,7 +37,7 @@ export class UnconnectedInput extends Component {
           className="btn btn-primary mb-2"
           onClick={(e) => this.submitGuessedWord(e)}
         >
-          Submit
+          Guess
         </button>
       </form>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { findByTestAttr, checkProps } from "../test/testUtils";
-import GuessedWords from "./GuessedWords";
+import TotalGuesses from "./TotalGuesses";
 
 const defaultProps = {
   guessedWords: [{ guessedWord: "train", letterMatchCount: 3 }],
@@ -15,11 +15,11 @@ const defaultProps = {
  */
 const setup = (props = {}) => {
   const setupProps = { ...defaultProps, ...props };
-  return shallow(<GuessedWords {...setupProps} />);
+  return shallow(<TotalGuesses {...setupProps} />);
 };
 
 test("does not throw warning with expected props", () => {
-  checkProps(GuessedWords, defaultProps);
+  checkProps(TotalGuesses, defaultProps);
 });
 
 describe("if there are no words guessed", () => {
@@ -29,14 +29,14 @@ describe("if there are no words guessed", () => {
     wrapper = setup({ guessedWords: [] });
   });
 
-  test("renders without error", () => {
-    const component = findByTestAttr(wrapper, "component-guessed-words");
+  test("render without error", () => {
+    const component = findByTestAttr(wrapper, "component-total-guesses");
     expect(component.length).toBe(1);
   });
 
-  test("renders instructions to guess a word", () => {
-    const component = findByTestAttr(wrapper, "component-instructions");
-    expect(component.text().length).not.toBe(0);
+  test("no show total guesses", () => {
+    const component = findByTestAttr(wrapper, "component-total-guesses");
+    expect(component.text().length).toBe(0);
   });
 });
 
@@ -49,23 +49,21 @@ describe("if there are words guessed", () => {
   ];
 
   beforeEach(() => {
-    wrapper = setup({
-      guessedWords,
-    });
+    wrapper = setup({ guessedWords: guessedWords });
   });
 
-  test("renders without error", () => {
-    const component = findByTestAttr(wrapper, "component-guessed-words");
+  test("render without error", () => {
+    const component = findByTestAttr(wrapper, "component-total-guesses");
     expect(component.length).toBe(1);
   });
 
-  test("renders guessed words section", () => {
-    const guessedWordsNode = findByTestAttr(wrapper, "guessed-words");
-    expect(guessedWordsNode.length).toBe(1);
+  test("show total guesses", () => {
+    const component = findByTestAttr(wrapper, "component-total-guesses");
+    expect(component.text().length).not.toBe(0);
   });
 
-  test("correct numbers of guessed words", () => {
-    const guessedWordNodes = findByTestAttr(wrapper, "guessed-word");
-    expect(guessedWordNodes.length).toBe(guessedWords.length);
+  test("correct number of total guesses", () => {
+    const component = findByTestAttr(wrapper, "component-total-guesses");
+    expect(component.text()).toContain(guessedWords.length);
   });
 });
