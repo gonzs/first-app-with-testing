@@ -4,7 +4,7 @@ import { findByTestAttr, checkProps } from "../test/testUtils";
 import TotalGuesses from "./TotalGuesses";
 
 const defaultProps = {
-  guessedWords: [{ guessedWord: "train", letterMatchCount: 3 }],
+  totalWords: 3,
 };
 
 /**
@@ -26,7 +26,7 @@ describe("if there are no words guessed", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = setup({ guessedWords: [] });
+    wrapper = setup({ totalWords: 0 });
   });
 
   test("render without error", () => {
@@ -42,14 +42,10 @@ describe("if there are no words guessed", () => {
 
 describe("if there are words guessed", () => {
   let wrapper;
-  const guessedWords = [
-    { guessedWord: "train", letterMatchCount: 4 },
-    { guessedWord: "task", letterMatchCount: 1 },
-    { guessedWord: "run", letterMatchCount: 2 },
-  ];
+  const totalWords = 3;
 
   beforeEach(() => {
-    wrapper = setup({ guessedWords: guessedWords });
+    wrapper = setup({ totalWords: totalWords });
   });
 
   test("render without error", () => {
@@ -64,6 +60,6 @@ describe("if there are words guessed", () => {
 
   test("correct number of total guesses", () => {
     const component = findByTestAttr(wrapper, "component-total-guesses");
-    expect(component.text()).toContain(guessedWords.length);
+    expect(component.text()).toContain(totalWords.toString());
   });
 });

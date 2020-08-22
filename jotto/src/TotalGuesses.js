@@ -1,22 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TotalGuesses = (props) => {
-  const total = props.guessedWords.length;
+const TotalGuesses = ({ totalWords }) => {
   return (
     <div data-test="component-total-guesses">
-      {total > 0 && <h6>Total Guesses: {total}</h6>}
+      {totalWords > 0 && <h6>Total Guesses: {totalWords}</h6>}
     </div>
   );
 };
 
 TotalGuesses.propTypes = {
-  guessedWords: PropTypes.arrayOf(
-    PropTypes.shape({
-      guessedWord: PropTypes.string.isRequired,
-      letterMatchCount: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  totalWords: PropTypes.number.isRequired,
 };
 
 export default TotalGuesses;
