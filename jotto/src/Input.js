@@ -18,6 +18,7 @@ export class UnconnectedInput extends Component {
 
     this.setState({ currentGuess: "" });
   }
+
   render() {
     const contents = this.props.success ? null : (
       <form className="form-inline">

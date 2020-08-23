@@ -6,6 +6,7 @@ import Input from "./Input";
 import { connect } from "react-redux";
 import { getSecretWord } from "./Redux/Actions";
 import TotalGuesses from "./TotalGuesses";
+import Reset from "./Reset";
 
 export class UnconnectedApp extends Component {
   componentDidMount() {
@@ -18,6 +19,7 @@ export class UnconnectedApp extends Component {
         <h1>Jotto</h1>
         <Congrats success={this.props.success} />
         <Input />
+        <Reset />
         <GuessedWords guessedWords={this.props.guessedWords} />
         <TotalGuesses totalWords={this.props.guessedWords.length} />
       </div>

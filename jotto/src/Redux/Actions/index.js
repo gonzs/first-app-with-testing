@@ -1,4 +1,9 @@
-import { CORRECT_GUESS, GUESS_WORD, SET_SECRET_WORD } from "./types";
+import {
+  CORRECT_GUESS,
+  GUESS_WORD,
+  SET_SECRET_WORD,
+  RESET_GAME,
+} from "./types";
 import { getLetterMatchCount } from "../../Helpers";
 import axios from "axios";
 
@@ -16,7 +21,7 @@ export function guessWord(guessedWord) {
       payload: { guessedWord, letterMatchCount },
     });
 
-    if (guessedWord === secretWord) dispatch({ type: CORRECT_GUESS });
+    if (guessedWord === secretWord) dispatch(correctGuess());
   };
 }
 
@@ -27,5 +32,12 @@ export function getSecretWord() {
       .then((response) =>
         dispatch({ type: SET_SECRET_WORD, payload: response.data })
       );
+  };
+}
+
+export function resetGame() {
+  return (dispatch) => {
+    dispatch({ type: RESET_GAME });
+    dispatch(getSecretWord());
   };
 }
