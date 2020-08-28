@@ -15,22 +15,23 @@ export class UnconnectedReset extends Component {
   }
 
   render() {
-    const contents = !this.props.success ? null : (
-      <button
-        data-test="reset-button"
-        type="submit"
-        className="btn btn-secondary mb-2"
-        onClick={(e) => this.onReset(e)}
-      >
-        New Word
-      </button>
-    );
+    const contents =
+      this.props.success || this.props.gaveup ? (
+        <button
+          data-test="reset-button"
+          type="submit"
+          className="btn btn-secondary mb-2"
+          onClick={(e) => this.onReset(e)}
+        >
+          New Word
+        </button>
+      ) : null;
     return <div data-test="component-reset">{contents}</div>;
   }
 }
 
-const mapStateToProps = ({ success }) => {
-  return { success };
+const mapStateToProps = ({ success, gaveup }) => {
+  return { success, gaveup };
 };
 
 export default connect(mapStateToProps, { resetGame })(UnconnectedReset);

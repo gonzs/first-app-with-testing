@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getSecretWord } from "./Redux/Actions";
 import TotalGuesses from "./TotalGuesses";
 import Reset from "./Reset";
+import SecretWordReveal from "./SecretWordReveal";
 
 export class UnconnectedApp extends Component {
   componentDidMount() {
@@ -18,6 +19,10 @@ export class UnconnectedApp extends Component {
       <div data-test="app-component" className="container">
         <h1>Jotto</h1>
         <Congrats success={this.props.success} />
+        <SecretWordReveal
+          gaveup={this.props.gaveup}
+          secretWord={this.props.secretWord}
+        />
         <Input />
         <Reset />
         <GuessedWords guessedWords={this.props.guessedWords} />
@@ -28,8 +33,8 @@ export class UnconnectedApp extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { success, guessedWords, secretWord } = state;
-  return { success, guessedWords, secretWord };
+  const { success, gaveup, guessedWords, secretWord } = state;
+  return { success, gaveup, guessedWords, secretWord };
 };
 
 export default connect(mapStateToProps, { getSecretWord })(UnconnectedApp);

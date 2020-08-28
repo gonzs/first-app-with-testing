@@ -2,6 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import { findByTestAttr, storeFactory } from "../test/testUtils";
 import Input, { UnconnectedInput } from "./Input";
+import { giveUp } from "./Redux/Actions";
 /**
  * Factory function to create a ShallowWrapper for the Input component
  * @function setup
@@ -17,15 +18,15 @@ const setup = (initialState = {}) => {
 };
 
 describe("render", () => {
-  describe("word has not been guessed", () => {
+  describe("word has not been guessed and not given up", () => {
     let wrapper;
 
     beforeEach(() => {
-      const initialState = { success: false };
+      const initialState = { success: false, gaveup: false };
       wrapper = setup(initialState);
     });
 
-    test("renders component withput error", () => {
+    test("renders component without error", () => {
       const component = findByTestAttr(wrapper, "component-input");
       expect(component.length).toBe(1);
     });
@@ -39,16 +40,22 @@ describe("render", () => {
       const submitButton = findByTestAttr(wrapper, "submit-button");
       expect(submitButton.length).toBe(1);
     });
+
+    test("renders giveup button", () => {
+      const giveupButton = findByTestAttr(wrapper, "giveup-button");
+      expect(giveupButton.length).toBe(1);
+    });
   });
+
   describe("word has been guessed", () => {
     let wrapper;
 
     beforeEach(() => {
-      const initialState = { success: true };
+      const initialState = { success: true, gaveup: false };
       wrapper = setup(initialState);
     });
 
-    test("renders component withput error", () => {
+    test("renders component without error", () => {
       const component = findByTestAttr(wrapper, "component-input");
       expect(component.length).toBe(1);
     });
@@ -62,6 +69,40 @@ describe("render", () => {
       const submitButton = findByTestAttr(wrapper, "submit-button");
       expect(submitButton.length).toBe(0);
     });
+
+    test("do not render giveup button", () => {
+      const giveupButton = findByTestAttr(wrapper, "giveup-button");
+      expect(giveupButton.length).toBe(0);
+    });
+  });
+
+  describe("word has not been guessed and has given up", () => {
+    let wrapper;
+
+    beforeEach(() => {
+      const initialState = { success: false, gaveup: true };
+      wrapper = setup(initialState);
+    });
+
+    test("renders component without error", () => {
+      const component = findByTestAttr(wrapper, "component-input");
+      expect(component.length).toBe(1);
+    });
+
+    test("renders input box", () => {
+      const inputBox = findByTestAttr(wrapper, "input-box");
+      expect(inputBox.length).toBe(0);
+    });
+
+    test("renders submit button", () => {
+      const submitButton = findByTestAttr(wrapper, "submit-button");
+      expect(submitButton.length).toBe(0);
+    });
+
+    test("do not render giveup button", () => {
+      const giveupButton = findByTestAttr(wrapper, "giveup-button");
+      expect(giveupButton.length).toBe(0);
+    });
   });
 });
 
@@ -73,11 +114,24 @@ describe("Redux props", () => {
 
     expect(successProp).toBe(success);
   });
+  test("has gaveup piece of state as prop", () => {
+    const gaveup = true;
+    const wrapper = setup({ gaveup });
+    const gaveupProp = wrapper.instance().props.gaveup;
+
+    expect(gaveupProp).toBe(gaveup);
+  });
 
   test("guessWord action creator is a function prop", () => {
     const wrapper = setup();
     const guessWordProp = wrapper.instance().props.guessWord;
     expect(guessWordProp).toBeInstanceOf(Function);
+  });
+
+  test("giveUp action creator is a function prop", () => {
+    const wrapper = setup();
+    const giveUpProp = wrapper.instance().props.giveUp;
+    expect(giveUpProp).toBeInstanceOf(Function);
   });
 });
 
@@ -113,5 +167,26 @@ describe("`guessWord` action creator call", () => {
 
   test("input box clears on submit", () => {
     expect(wrapper.state("currentGuess")).toBe("");
+  });
+});
+
+describe("`giveUp` action creator call", () => {
+  let giveUpMock, wrapper;
+
+  beforeEach(() => {
+    giveUpMock = jest.fn();
+    const props = {
+      giveUp: giveUpMock,
+    };
+
+    wrapper = shallow(<UnconnectedInput {...props} />);
+
+    const giveupButton = findByTestAttr(wrapper, "giveup-button");
+    giveupButton.simulate("click");
+  });
+
+  test("calls `giveUp` when giveup button is clicked", () => {
+    const giveUpCallCount = giveUpMock.mock.calls.length;
+    expect(giveUpCallCount).toBe(1);
   });
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { storeFactory, findByTestAttr } from "../test/testUtils";
+import { storeFactory } from "../test/testUtils";
 import App, { UnconnectedApp } from "./App";
 
 /**
@@ -30,13 +30,18 @@ describe("redux props", () => {
     const secretWordProp = wrapper.instance().props.secretWord;
     expect(secretWordProp).toBe(secretWord);
   });
+  test("has access to `gaveup` state", () => {
+    const gaveup = true;
+    const wrapper = setup({ gaveup });
+    const gaveupProp = wrapper.instance().props.gaveup;
+    expect(gaveupProp).toBe(gaveup);
+  });
   test("has access to `guessedWords` state", () => {
     const guessedWords = [{ guessedWord: "train", letterMatchCount: 3 }];
     const wrapper = setup({ guessedWords });
     const guessedWordsProp = wrapper.instance().props.guessedWords;
     expect(guessedWordsProp).toEqual(guessedWords);
   });
-
   test("`getSecretWord` action creator is a function on the props", () => {
     const wrapper = setup();
     const getSecretWordProp = wrapper.instance().props.getSecretWord;
@@ -50,6 +55,7 @@ describe("redux props", () => {
       getSecretWord: getSecretWordMock,
       success: false,
       guessedWords: [],
+      gaveup: false,
     };
 
     // Set up App component with getSecretWordMock as the getSecretWord prop

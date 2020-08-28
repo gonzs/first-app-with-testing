@@ -1,5 +1,5 @@
-import { correctGuess, getSecretWord } from "./";
-import { CORRECT_GUESS } from "./types";
+import { correctGuess, getSecretWord, giveUp } from "./";
+import { CORRECT_GUESS, GIVE_UP } from "./types";
 import moxios from "moxios";
 import { storeFactory } from "../../../test/testUtils";
 
@@ -7,6 +7,13 @@ describe("correctGuess", () => {
   test("returns an action type `CORRECT_GUESS`", () => {
     const action = correctGuess();
     expect(action).toEqual({ type: CORRECT_GUESS });
+  });
+});
+
+describe("giveUp", () => {
+  test("returns an action type `GIVE_UP`", () => {
+    const action = giveUp();
+    expect(action).toEqual({ type: GIVE_UP });
   });
 });
 

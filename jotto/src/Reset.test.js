@@ -49,6 +49,24 @@ describe("render", () => {
       expect(resetButton.length).toBe(0);
     });
   });
+  describe("non successful guess but gave up", () => {
+    let wrapper;
+
+    beforeEach(() => {
+      const initialState = { success: false, gaveup: true };
+      wrapper = setup(initialState);
+    });
+
+    test("renders component withput error", () => {
+      const component = findByTestAttr(wrapper, "component-reset");
+      expect(component.length).toBe(1);
+    });
+
+    test("do not render reset button withput error", () => {
+      const resetButton = findByTestAttr(wrapper, "reset-button");
+      expect(resetButton.length).toBe(1);
+    });
+  });
 });
 
 describe("redux props", () => {
@@ -57,6 +75,13 @@ describe("redux props", () => {
     const wrapper = setup({ success });
     const successProp = wrapper.instance().props.success;
     expect(successProp).toBe(success);
+  });
+
+  test("has gaveup piece of state as prop", () => {
+    const gaveup = true;
+    const wrapper = setup({ gaveup });
+    const gaveupProp = wrapper.instance().props.gaveup;
+    expect(gaveupProp).toBe(gaveup);
   });
 
   test("resetGame action creator is a function prop", () => {

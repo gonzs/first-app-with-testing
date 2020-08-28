@@ -1,5 +1,6 @@
 import { storeFactory } from "../../test/testUtils";
-import { guessWord, resetGame } from "./Actions";
+import { guessWord, resetGame, giveUp } from "./Actions";
+import moxios from "moxios";
 
 describe("guessWord action dispatcher", () => {
   const secretWord = "party";
@@ -18,6 +19,7 @@ describe("guessWord action dispatcher", () => {
       const expectedState = {
         secretWord,
         success: false,
+        gaveup: false,
         guessedWords: [{ guessedWord: unsuccessfulGuess, letterMatchCount: 3 }],
       };
       expect(newState).toEqual(expectedState);
@@ -28,7 +30,19 @@ describe("guessWord action dispatcher", () => {
       const expectedState = {
         secretWord,
         success: true,
+        gaveup: false,
         guessedWords: [{ guessedWord: secretWord, letterMatchCount: 5 }],
+      };
+      expect(newState).toEqual(expectedState);
+    });
+    test("updates state correctly for give up", () => {
+      store.dispatch(giveUp());
+      const newState = store.getState();
+      const expectedState = {
+        secretWord,
+        success: false,
+        gaveup: true,
+        guessedWords: [],
       };
       expect(newState).toEqual(expectedState);
     });
@@ -47,6 +61,7 @@ describe("guessWord action dispatcher", () => {
       const expectedState = {
         secretWord,
         success: false,
+        gaveup: false,
         guessedWords: [
           ...guessedWords,
           { guessedWord: unsuccessfulGuess, letterMatchCount: 3 },
@@ -60,6 +75,7 @@ describe("guessWord action dispatcher", () => {
       const expectedState = {
         secretWord,
         success: true,
+        gaveup: false,
         guessedWords: [
           ...guessedWords,
           { guessedWord: secretWord, letterMatchCount: 5 },
@@ -73,25 +89,35 @@ describe("guessWord action dispatcher", () => {
 describe("resetGame action dispatcher", () => {
   let store;
   const secretWord = "party";
+  const newSecretWord = "train";
   const initialState = {
     secretWord,
     success: true,
+    gaveup: false,
     guessedWords: [{ guessedWord: secretWord, letterMatchCount: 5 }],
   };
   beforeEach(() => {
     store = storeFactory(initialState);
+    moxios.install();
   });
-
+  afterEach(() => {
+    moxios.uninstall();
+  });
   test("updates state correctly for reset game", () => {
-    store.dispatch(resetGame());
-    const newState = store.getState();
     const expectedState = {
-      secretWord,
+      secretWord: newSecretWord,
       success: false,
+      gaveup: false,
       guessedWords: [],
     };
-
-    // !SecretWord should be a different one
-    expect(newState).toEqual(expectedState);
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({ status: 200, response: newSecretWord });
+    });
+    return store.dispatch(resetGame()).then(() => {
+      const newState = store.getState();
+      expect(newState).toEqual(expectedState);
+    });
+    // });
   });
 });
