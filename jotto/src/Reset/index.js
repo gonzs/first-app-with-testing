@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { resetGame } from "./Redux/Actions";
+import { resetGame } from "../Redux/Actions";
 
 export class UnconnectedReset extends Component {
   constructor(props) {

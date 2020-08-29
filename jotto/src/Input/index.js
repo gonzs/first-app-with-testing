@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { guessWord, giveUp } from "./Redux/Actions";
+import { guessWord, giveUp } from "../Redux/Actions";
 
 export class UnconnectedInput extends Component {
   constructor(props) {

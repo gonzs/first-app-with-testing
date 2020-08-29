@@ -1,8 +1,8 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { findByTestAttr, storeFactory } from "../test/testUtils";
-import Input, { UnconnectedInput } from "./Input";
-import { giveUp } from "./Redux/Actions";
+import { findByTestAttr, storeFactory } from "../../test/testUtils";
+import Input, { UnconnectedInput } from "./";
+
 /**
  * Factory function to create a ShallowWrapper for the Input component
  * @function setup
@@ -111,14 +111,13 @@ describe("Redux props", () => {
     const success = true;
     const wrapper = setup({ success });
     const successProp = wrapper.instance().props.success;
-
     expect(successProp).toBe(success);
   });
+
   test("has gaveup piece of state as prop", () => {
     const gaveup = true;
     const wrapper = setup({ gaveup });
     const gaveupProp = wrapper.instance().props.gaveup;
-
     expect(gaveupProp).toBe(gaveup);
   });
 

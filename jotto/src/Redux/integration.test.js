@@ -12,7 +12,6 @@ describe("guessWord action dispatcher", () => {
     beforeEach(() => {
       store = storeFactory(initialState);
     });
-
     test("updates state correctly for unsuccessful guess", () => {
       store.dispatch(guessWord(unsuccessfulGuess));
       const newState = store.getState();
@@ -118,6 +117,5 @@ describe("resetGame action dispatcher", () => {
       const newState = store.getState();
       expect(newState).toEqual(expectedState);
     });
-    // });
   });
 });

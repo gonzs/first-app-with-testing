@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
-import Congrats from "./Congrats";
-import GuessedWords from "./GuessedWords";
-import Input from "./Input";
+import Congrats from "../Congrats";
+import GuessedWords from "../GuessedWords";
+import Input from "../Input";
 import { connect } from "react-redux";
-import { getSecretWord } from "./Redux/Actions";
-import TotalGuesses from "./TotalGuesses";
-import Reset from "./Reset";
-import SecretWordReveal from "./SecretWordReveal";
+import { getSecretWord } from "../Redux/Actions";
+import TotalGuesses from "../TotalGuesses";
+import Reset from "../Reset";
+import SecretWordReveal from "../SecretWordReveal";
 
 export class UnconnectedApp extends Component {
   componentDidMount() {
