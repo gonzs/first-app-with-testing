@@ -42,6 +42,12 @@ describe("redux props", () => {
     const guessedWordsProp = wrapper.instance().props.guessedWords;
     expect(guessedWordsProp).toEqual(guessedWords);
   });
+  test("has access to `customSecretWord` state", () => {
+    const customSecretWord = "none";
+    const wrapper = setup({ customSecretWord });
+    const customSecretWordProp = wrapper.instance().props.customSecretWord;
+    expect(customSecretWordProp).toBe(customSecretWord);
+  });
   test("`getSecretWord` action creator is a function on the props", () => {
     const wrapper = setup();
     const getSecretWordProp = wrapper.instance().props.getSecretWord;
@@ -56,6 +62,7 @@ describe("redux props", () => {
       success: false,
       guessedWords: [],
       gaveup: false,
+      customSecretWord: "none",
     };
 
     // Set up App component with getSecretWordMock as the getSecretWord prop

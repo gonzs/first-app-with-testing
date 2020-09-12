@@ -56,12 +56,17 @@ export class UnconnectedInput extends Component {
           </button>
         </form>
       );
-    return <div data-test="component-input">{contents}</div>;
+    const component =
+      this.props.customSecretWord !== "in progress" ? (
+        <div data-test="component-input">{contents}</div>
+      ) : null;
+
+    return <span>{component}</span>;
   }
 }
 
-const mapStateToProps = ({ success, gaveup }) => {
-  return { success, gaveup };
+const mapStateToProps = ({ success, gaveup, customSecretWord }) => {
+  return { success, gaveup, customSecretWord };
 };
 
 export default connect(mapStateToProps, { guessWord, giveUp })(

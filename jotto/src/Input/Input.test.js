@@ -22,7 +22,11 @@ describe("render", () => {
     let wrapper;
 
     beforeEach(() => {
-      const initialState = { success: false, gaveup: false };
+      const initialState = {
+        success: false,
+        gaveup: false,
+        customSecretWord: "none",
+      };
       wrapper = setup(initialState);
     });
 
@@ -51,7 +55,11 @@ describe("render", () => {
     let wrapper;
 
     beforeEach(() => {
-      const initialState = { success: true, gaveup: false };
+      const initialState = {
+        success: true,
+        gaveup: false,
+        customSecretWord: "none",
+      };
       wrapper = setup(initialState);
     });
 
@@ -80,7 +88,11 @@ describe("render", () => {
     let wrapper;
 
     beforeEach(() => {
-      const initialState = { success: false, gaveup: true };
+      const initialState = {
+        success: false,
+        gaveup: true,
+        customSecretWord: "none",
+      };
       wrapper = setup(initialState);
     });
 
@@ -104,6 +116,24 @@ describe("render", () => {
       expect(giveupButton.length).toBe(0);
     });
   });
+
+  describe("setting new secret custom word", () => {
+    let wrapper;
+
+    beforeEach(() => {
+      const initialState = {
+        success: false,
+        gaveup: false,
+        customSecretWord: "in progress",
+      };
+      wrapper = setup(initialState);
+    });
+
+    test("no render component", () => {
+      const component = findByTestAttr(wrapper, "component-input");
+      expect(component.length).toBe(0);
+    });
+  });
 });
 
 describe("Redux props", () => {
@@ -119,6 +149,13 @@ describe("Redux props", () => {
     const wrapper = setup({ gaveup });
     const gaveupProp = wrapper.instance().props.gaveup;
     expect(gaveupProp).toBe(gaveup);
+  });
+
+  test("has customSecretWord piece of state as prop", () => {
+    const customSecretWord = "none";
+    const wrapper = setup({ customSecretWord });
+    const customSecretWordProp = wrapper.instance().props.customSecretWord;
+    expect(customSecretWordProp).toBe(customSecretWord);
   });
 
   test("guessWord action creator is a function prop", () => {

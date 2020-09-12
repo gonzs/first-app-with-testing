@@ -8,6 +8,7 @@ import { getSecretWord } from "../Redux/Actions";
 import TotalGuesses from "../TotalGuesses";
 import Reset from "../Reset";
 import SecretWordReveal from "../SecretWordReveal";
+import CustomSecretWord from "../CustomSecretWord";
 
 export class UnconnectedApp extends Component {
   componentDidMount() {
@@ -27,14 +28,19 @@ export class UnconnectedApp extends Component {
         <Reset />
         <GuessedWords guessedWords={this.props.guessedWords} />
         <TotalGuesses totalWords={this.props.guessedWords.length} />
+
+        <CustomSecretWord
+          customSecretWord={this.props.customSecretWord}
+          guessedWords={this.props.guessedWords.length}
+        />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  const { success, gaveup, guessedWords, secretWord } = state;
-  return { success, gaveup, guessedWords, secretWord };
+  const { success, gaveup, guessedWords, secretWord, customSecretWord } = state;
+  return { success, gaveup, guessedWords, secretWord, customSecretWord };
 };
 
 export default connect(mapStateToProps, { getSecretWord })(UnconnectedApp);

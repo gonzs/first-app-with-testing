@@ -20,6 +20,7 @@ describe("guessWord action dispatcher", () => {
         success: false,
         gaveup: false,
         guessedWords: [{ guessedWord: unsuccessfulGuess, letterMatchCount: 3 }],
+        customSecretWord: "none",
       };
       expect(newState).toEqual(expectedState);
     });
@@ -31,6 +32,7 @@ describe("guessWord action dispatcher", () => {
         success: true,
         gaveup: false,
         guessedWords: [{ guessedWord: secretWord, letterMatchCount: 5 }],
+        customSecretWord: "none",
       };
       expect(newState).toEqual(expectedState);
     });
@@ -42,6 +44,7 @@ describe("guessWord action dispatcher", () => {
         success: false,
         gaveup: true,
         guessedWords: [],
+        customSecretWord: "none",
       };
       expect(newState).toEqual(expectedState);
     });
@@ -65,6 +68,7 @@ describe("guessWord action dispatcher", () => {
           ...guessedWords,
           { guessedWord: unsuccessfulGuess, letterMatchCount: 3 },
         ],
+        customSecretWord: "none",
       };
       expect(newState).toEqual(expectedState);
     });
@@ -79,6 +83,7 @@ describe("guessWord action dispatcher", () => {
           ...guessedWords,
           { guessedWord: secretWord, letterMatchCount: 5 },
         ],
+        customSecretWord: "none",
       };
       expect(newState).toEqual(expectedState);
     });
@@ -94,6 +99,7 @@ describe("resetGame action dispatcher", () => {
     success: true,
     gaveup: false,
     guessedWords: [{ guessedWord: secretWord, letterMatchCount: 5 }],
+    customSecretWord: "none",
   };
   beforeEach(() => {
     store = storeFactory(initialState);
@@ -102,12 +108,14 @@ describe("resetGame action dispatcher", () => {
   afterEach(() => {
     moxios.uninstall();
   });
+
   test("updates state correctly for reset game", () => {
     const expectedState = {
       secretWord: newSecretWord,
       success: false,
       gaveup: false,
       guessedWords: [],
+      customSecretWord: "none",
     };
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
