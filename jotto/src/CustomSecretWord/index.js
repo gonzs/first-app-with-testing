@@ -49,7 +49,7 @@ export class UnconnectedCustomSecretWord extends Component {
         <div>
           <button
             data-test="button-enter-word"
-            className="btn btn-warning mb-2"
+            className="btn btn-warning mb-2 p mt-sm-5"
             onClick={() => {
               this.onEnterWord();
             }}

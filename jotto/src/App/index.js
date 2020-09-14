@@ -26,7 +26,10 @@ export class UnconnectedApp extends Component {
         />
         <Input />
         <Reset />
-        <GuessedWords guessedWords={this.props.guessedWords} />
+        <GuessedWords
+          guessedWords={this.props.guessedWords}
+          customSecretWord={this.props.customSecretWord}
+        />
         <TotalGuesses totalWords={this.props.guessedWords.length} />
 
         <CustomSecretWord

@@ -49,7 +49,7 @@ export class UnconnectedInput extends Component {
           </button>
           <button
             data-test="giveup-button"
-            className="btn btn-primary mb-2"
+            className="btn btn-primary mb-2 p mx-sm-4"
             onClick={() => this.onGiveUp()}
           >
             Give Up

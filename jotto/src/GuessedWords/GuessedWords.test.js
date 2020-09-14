@@ -5,6 +5,7 @@ import GuessedWords from "./";
 
 const defaultProps = {
   guessedWords: [{ guessedWord: "train", letterMatchCount: 3 }],
+  customSecretWord: "none",
 };
 
 /**
@@ -67,5 +68,19 @@ describe("if there are words guessed", () => {
   test("correct numbers of guessed words", () => {
     const guessedWordNodes = findByTestAttr(wrapper, "guessed-word");
     expect(guessedWordNodes.length).toBe(guessedWords.length);
+  });
+});
+
+describe("if there is custom secret word input", () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup({
+      customSecretWord: "in progress",
+    });
+  });
+
+  test("no renders ", () => {
+    const component = findByTestAttr(wrapper, "component-guessed-words");
+    expect(component.length).toBe(0);
   });
 });

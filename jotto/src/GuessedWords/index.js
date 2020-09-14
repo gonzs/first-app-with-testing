@@ -35,7 +35,12 @@ const GuessedWords = (props) => {
     );
   }
 
-  return <div data-test="component-guessed-words">{contents}</div>;
+  const component =
+    props.customSecretWord !== "in progress" ? (
+      <div data-test="component-guessed-words">{contents}</div>
+    ) : null;
+
+  return <span>{component}</span>;
 };
 
 GuessedWords.propTypes = {
@@ -45,6 +50,7 @@ GuessedWords.propTypes = {
       letterMatchCount: PropTypes.number.isRequired,
     })
   ).isRequired,
+  customSecretWord: PropTypes.string.isRequired,
 };
 
 export default GuessedWords;
