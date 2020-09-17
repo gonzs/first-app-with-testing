@@ -4,6 +4,7 @@ import guessedWords from "./guessedWords";
 import secretWord from "./secretWord";
 import gaveup from "./gaveup";
 import customSecretWord from "./customSecretWord";
+import serverError from "./serverError";
 
 export default combineReducers({
   success,
@@ -11,4 +12,5 @@ export default combineReducers({
   guessedWords,
   secretWord,
   customSecretWord,
+  serverError,
 });

@@ -9,6 +9,7 @@ import TotalGuesses from "../TotalGuesses";
 import Reset from "../Reset";
 import SecretWordReveal from "../SecretWordReveal";
 import CustomSecretWord from "../CustomSecretWord";
+import ServerError from "../ServerError";
 
 export class UnconnectedApp extends Component {
   componentDidMount() {
@@ -16,8 +17,12 @@ export class UnconnectedApp extends Component {
   }
 
   render() {
-    return (
-      <div data-test="app-component" className="container">
+    const content = this.props.serverError ? (
+      <div data-test="error-component">
+        <ServerError />
+      </div>
+    ) : (
+      <div data-test="app-component">
         <h1>Jotto</h1>
         <Congrats success={this.props.success} />
         <SecretWordReveal
@@ -38,12 +43,28 @@ export class UnconnectedApp extends Component {
         />
       </div>
     );
+
+    return <div className="container mt-5">{content}</div>;
   }
 }
 
 const mapStateToProps = (state) => {
-  const { success, gaveup, guessedWords, secretWord, customSecretWord } = state;
-  return { success, gaveup, guessedWords, secretWord, customSecretWord };
+  const {
+    success,
+    gaveup,
+    guessedWords,
+    secretWord,
+    customSecretWord,
+    serverError,
+  } = state;
+  return {
+    success,
+    gaveup,
+    guessedWords,
+    secretWord,
+    customSecretWord,
+    serverError,
+  };
 };
 
 export default connect(mapStateToProps, { getSecretWord })(UnconnectedApp);

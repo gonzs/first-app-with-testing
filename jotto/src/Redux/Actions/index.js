@@ -5,6 +5,7 @@ import {
   RESET_GAME,
   GIVE_UP,
   CUSTOM_SECRET_WORD,
+  SERVER_ERROR,
 } from "./types";
 import { getLetterMatchCount } from "../../Helpers";
 import axios from "axios";
@@ -34,20 +35,24 @@ export function setSecretWord(word) {
   };
 }
 
-export function getSecretWordDispatch(dispatch) {
+export function callSecretWordEndpoint(dispatch) {
   return axios
     .get("http://localhost:3030")
-    .then((response) => dispatch(setSecretWord(response.data)));
+    .then((response) => dispatch(setSecretWord(response.data)))
+    .catch((error) => {
+      // client received an error response (5xx, 4xx)
+      dispatch(serverError());
+    });
 }
 
 export function getSecretWord() {
-  return getSecretWordDispatch;
+  return (dispatch) => callSecretWordEndpoint(dispatch);
 }
 
 export function resetGame() {
   return (dispatch) => {
     dispatch({ type: RESET_GAME });
-    return getSecretWordDispatch(dispatch);
+    return callSecretWordEndpoint(dispatch);
   };
 }
 
@@ -57,4 +62,8 @@ export function giveUp() {
 
 export function setCustomSecretWord(status) {
   return { type: CUSTOM_SECRET_WORD, payload: status };
+}
+
+export function serverError() {
+  return { type: SERVER_ERROR };
 }

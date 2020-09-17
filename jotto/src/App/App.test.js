@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { storeFactory } from "../../test/testUtils";
+import { findByTestAttr, storeFactory } from "../../test/testUtils";
 import App, { UnconnectedApp } from "./";
 
 /**
@@ -48,6 +48,12 @@ describe("redux props", () => {
     const customSecretWordProp = wrapper.instance().props.customSecretWord;
     expect(customSecretWordProp).toBe(customSecretWord);
   });
+  test("has access to `serverError` state", () => {
+    const serverError = false;
+    const wrapper = setup({ serverError });
+    const serverErrorProp = wrapper.instance().props.serverError;
+    expect(serverErrorProp).toBe(serverError);
+  });
   test("`getSecretWord` action creator is a function on the props", () => {
     const wrapper = setup();
     const getSecretWordProp = wrapper.instance().props.getSecretWord;
@@ -74,5 +80,31 @@ describe("redux props", () => {
     // Check to see if mock ran
     const getSecretWordCallCount = getSecretWordMock.mock.calls.length;
     expect(getSecretWordCallCount).toBe(1);
+  });
+});
+
+describe("render", () => {
+  test("render app component", () => {
+    const wrapper = setup({ serverError: false });
+    const component = findByTestAttr(wrapper, "app-component");
+    expect(component.length).toBe(1);
+  });
+
+  test("no render app component", () => {
+    const wrapper = setup({ serverError: true });
+    const component = findByTestAttr(wrapper, "app-component");
+    expect(component.length).toBe(0);
+  });
+
+  test("no render serverError component", () => {
+    const wrapper = setup({ serverError: false });
+    const component = findByTestAttr(wrapper, "error-component");
+    expect(component.length).toBe(0);
+  });
+
+  test("render serverError component", () => {
+    const wrapper = setup({ serverError: true });
+    const component = findByTestAttr(wrapper, "error-component");
+    expect(component.length).toBe(1);
   });
 });

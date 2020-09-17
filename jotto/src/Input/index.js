@@ -5,7 +5,7 @@ import { guessWord, giveUp } from "../Redux/Actions";
 export class UnconnectedInput extends Component {
   constructor(props) {
     super(props);
-    this.state = { currentGuess: null };
+    this.state = { currentGuess: "" };
 
     this.submitGuessedWord = this.submitGuessedWord.bind(this);
     this.onGiveUp = this.onGiveUp.bind(this);
