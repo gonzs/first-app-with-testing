@@ -10,6 +10,7 @@ import Reset from "../Reset";
 import SecretWordReveal from "../SecretWordReveal";
 import CustomSecretWord from "../CustomSecretWord";
 import ServerError from "../ServerError";
+import Loading from "../Loading";
 
 export class UnconnectedApp extends Component {
   componentDidMount() {
@@ -17,12 +18,23 @@ export class UnconnectedApp extends Component {
   }
 
   render() {
-    const content = this.props.serverError ? (
-      <div data-test="error-component">
-        <ServerError />
-      </div>
-    ) : (
-      <div data-test="app-component">
+    if (this.props.isFetching)
+      return (
+        <div className="container mt-5" data-test="loading-component">
+          <Loading />
+        </div>
+      );
+
+    if (this.props.serverError)
+      return (
+        <div className="container mt-5" data-test="error-component">
+          <h1>Jotto</h1>
+          <ServerError />
+        </div>
+      );
+
+    return (
+      <div className="container mt-5" data-test="app-component">
         <h1>Jotto</h1>
         <Congrats success={this.props.success} />
         <SecretWordReveal
@@ -43,8 +55,6 @@ export class UnconnectedApp extends Component {
         />
       </div>
     );
-
-    return <div className="container mt-5">{content}</div>;
   }
 }
 
@@ -56,6 +66,7 @@ const mapStateToProps = (state) => {
     secretWord,
     customSecretWord,
     serverError,
+    isFetching,
   } = state;
   return {
     success,
@@ -64,6 +75,7 @@ const mapStateToProps = (state) => {
     secretWord,
     customSecretWord,
     serverError,
+    isFetching,
   };
 };
 

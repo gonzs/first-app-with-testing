@@ -5,3 +5,4 @@ export const RESET_GAME = "RESET_GAME";
 export const GIVE_UP = "GIVE_UP";
 export const CUSTOM_SECRET_WORD = "CUSTOM_SECRET_WORD";
 export const SERVER_ERROR = "SERVER_ERROR";
+export const IS_FETCHING = "IS_FETCHING";

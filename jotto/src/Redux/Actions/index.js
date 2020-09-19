@@ -6,6 +6,7 @@ import {
   GIVE_UP,
   CUSTOM_SECRET_WORD,
   SERVER_ERROR,
+  IS_FETCHING,
 } from "./types";
 import { getLetterMatchCount } from "../../Helpers";
 import axios from "axios";
@@ -36,13 +37,15 @@ export function setSecretWord(word) {
 }
 
 export function callSecretWordEndpoint(dispatch) {
+  dispatch(isFetching(true));
   return axios
     .get("http://localhost:3030")
     .then((response) => dispatch(setSecretWord(response.data)))
-    .catch((error) => {
+    .catch(() => {
       // client received an error response (5xx, 4xx)
       dispatch(serverError());
-    });
+    })
+    .finally(() => dispatch(isFetching(false)));
 }
 
 export function getSecretWord() {
@@ -66,4 +69,8 @@ export function setCustomSecretWord(status) {
 
 export function serverError() {
   return { type: SERVER_ERROR };
+}
+
+export function isFetching(status) {
+  return { type: IS_FETCHING, payload: status };
 }

@@ -54,6 +54,12 @@ describe("redux props", () => {
     const serverErrorProp = wrapper.instance().props.serverError;
     expect(serverErrorProp).toBe(serverError);
   });
+  test("has access to `isFetching` state", () => {
+    const isFetching = false;
+    const wrapper = setup({ isFetching });
+    const isFetchingProp = wrapper.instance().props.isFetching;
+    expect(isFetchingProp).toBe(isFetching);
+  });
   test("`getSecretWord` action creator is a function on the props", () => {
     const wrapper = setup();
     const getSecretWordProp = wrapper.instance().props.getSecretWord;
@@ -106,5 +112,17 @@ describe("render", () => {
     const wrapper = setup({ serverError: true });
     const component = findByTestAttr(wrapper, "error-component");
     expect(component.length).toBe(1);
+  });
+
+  test("render Loading component", () => {
+    const wrapper = setup({ isFetching: true });
+    const component = findByTestAttr(wrapper, "loading-component");
+    expect(component.length).toBe(1);
+  });
+
+  test("render Loading component", () => {
+    const wrapper = setup({ isFetching: false });
+    const component = findByTestAttr(wrapper, "loading-component");
+    expect(component.length).toBe(0);
   });
 });

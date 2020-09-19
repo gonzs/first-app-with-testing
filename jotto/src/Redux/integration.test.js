@@ -22,6 +22,7 @@ describe("guessWord action dispatcher", () => {
         guessedWords: [{ guessedWord: unsuccessfulGuess, letterMatchCount: 3 }],
         customSecretWord: "none",
         serverError: false,
+        isFetching: false,
       };
       expect(newState).toEqual(expectedState);
     });
@@ -35,6 +36,7 @@ describe("guessWord action dispatcher", () => {
         guessedWords: [{ guessedWord: secretWord, letterMatchCount: 5 }],
         customSecretWord: "none",
         serverError: false,
+        isFetching: false,
       };
       expect(newState).toEqual(expectedState);
     });
@@ -48,6 +50,7 @@ describe("guessWord action dispatcher", () => {
         guessedWords: [],
         customSecretWord: "none",
         serverError: false,
+        isFetching: false,
       };
       expect(newState).toEqual(expectedState);
     });
@@ -73,6 +76,7 @@ describe("guessWord action dispatcher", () => {
         ],
         customSecretWord: "none",
         serverError: false,
+        isFetching: false,
       };
       expect(newState).toEqual(expectedState);
     });
@@ -89,6 +93,7 @@ describe("guessWord action dispatcher", () => {
         ],
         customSecretWord: "none",
         serverError: false,
+        isFetching: false,
       };
       expect(newState).toEqual(expectedState);
     });
@@ -106,6 +111,7 @@ describe("resetGame action dispatcher", () => {
     guessedWords: [{ guessedWord: secretWord, letterMatchCount: 5 }],
     customSecretWord: "none",
     serverError: false,
+    isFetching: false,
   };
   beforeEach(() => {
     store = storeFactory(initialState);
@@ -123,6 +129,7 @@ describe("resetGame action dispatcher", () => {
       guessedWords: [],
       customSecretWord: "none",
       serverError: false,
+      isFetching: false,
     };
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();

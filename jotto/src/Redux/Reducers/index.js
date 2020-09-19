@@ -5,6 +5,7 @@ import secretWord from "./secretWord";
 import gaveup from "./gaveup";
 import customSecretWord from "./customSecretWord";
 import serverError from "./serverError";
+import isFetching from "./isFetching";
 
 export default combineReducers({
   success,
@@ -13,4 +14,5 @@ export default combineReducers({
   secretWord,
   customSecretWord,
   serverError,
+  isFetching,
 });

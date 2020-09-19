@@ -1,5 +1,12 @@
-import { correctGuess, getSecretWord, giveUp, serverError } from "./";
-import { CORRECT_GUESS, GIVE_UP, SERVER_ERROR } from "./types";
+import {
+  correctGuess,
+  fetching,
+  getSecretWord,
+  giveUp,
+  serverError,
+  isFetching,
+} from "./";
+import { CORRECT_GUESS, GIVE_UP, IS_FETCHING, SERVER_ERROR } from "./types";
 import moxios from "moxios";
 import { storeFactory } from "../../../test/testUtils";
 
@@ -39,6 +46,7 @@ describe("getSecretWord action creator", () => {
       const newState = store.getState();
       expect(newState.secretWord).toBe(secretWord);
       expect(newState.serverError).toBe(false);
+      expect(newState.isFetching).toBe(false);
     });
   });
 
@@ -53,6 +61,7 @@ describe("getSecretWord action creator", () => {
     return store.dispatch(getSecretWord()).then(() => {
       const newState = store.getState();
       expect(newState.serverError).toBe(true);
+      expect(newState.isFetching).toBe(false);
     });
   });
 });
@@ -61,5 +70,12 @@ describe("serverError action creator", () => {
   test("returns an action type `SERVER_ERROR`", () => {
     const action = serverError();
     expect(action).toEqual({ type: SERVER_ERROR });
+  });
+});
+
+describe("isFetching action creator", () => {
+  test("returns an action type `IS_FETCHING`", () => {
+    const action = isFetching(true);
+    expect(action).toEqual({ type: IS_FETCHING, payload: true });
   });
 });
