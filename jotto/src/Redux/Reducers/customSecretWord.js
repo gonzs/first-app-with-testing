@@ -1,10 +1,10 @@
-import { CUSTOM_SECRET_WORD, RESET_GAME } from "../Actions/types";
+import { types } from "../Actions/types";
 
 export default (state = "none", action) => {
   switch (action.type) {
-    case CUSTOM_SECRET_WORD:
+    case types.CUSTOM_SECRET_WORD:
       return action.payload;
-    case RESET_GAME:
+    case types.RESET_GAME:
       return "none";
 
     default:

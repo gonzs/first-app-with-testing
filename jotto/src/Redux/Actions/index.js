@@ -1,18 +1,9 @@
-import {
-  CORRECT_GUESS,
-  GUESS_WORD,
-  SET_SECRET_WORD,
-  RESET_GAME,
-  GIVE_UP,
-  CUSTOM_SECRET_WORD,
-  SERVER_ERROR,
-  IS_FETCHING,
-} from "./types";
+import { types } from "./types";
 import { getLetterMatchCount } from "../../Helpers";
 import axios from "axios";
 
 export function correctGuess() {
-  return { type: CORRECT_GUESS };
+  return { type: types.CORRECT_GUESS };
 }
 
 export function guessWord(guessedWord) {
@@ -21,7 +12,7 @@ export function guessWord(guessedWord) {
     const letterMatchCount = getLetterMatchCount(guessedWord, secretWord);
 
     dispatch({
-      type: GUESS_WORD,
+      type: types.GUESS_WORD,
       payload: { guessedWord, letterMatchCount },
     });
 
@@ -31,7 +22,7 @@ export function guessWord(guessedWord) {
 
 export function setSecretWord(word) {
   return {
-    type: SET_SECRET_WORD,
+    type: types.SET_SECRET_WORD,
     payload: word,
   };
 }
@@ -54,23 +45,23 @@ export function getSecretWord() {
 
 export function resetGame() {
   return (dispatch) => {
-    dispatch({ type: RESET_GAME });
+    dispatch({ type: types.RESET_GAME });
     return callSecretWordEndpoint(dispatch);
   };
 }
 
 export function giveUp() {
-  return { type: GIVE_UP };
+  return { type: types.GIVE_UP };
 }
 
 export function setCustomSecretWord(status) {
-  return { type: CUSTOM_SECRET_WORD, payload: status };
+  return { type: types.CUSTOM_SECRET_WORD, payload: status };
 }
 
 export function serverError() {
-  return { type: SERVER_ERROR };
+  return { type: types.SERVER_ERROR };
 }
 
 export function isFetching(status) {
-  return { type: IS_FETCHING, payload: status };
+  return { type: types.IS_FETCHING, payload: status };
 }

@@ -1,10 +1,10 @@
-import { CORRECT_GUESS, RESET_GAME } from "../Actions/types";
+import { types } from "../Actions/types";
 
 export default (state = false, action) => {
   switch (action.type) {
-    case CORRECT_GUESS:
+    case types.CORRECT_GUESS:
       return true;
-    case RESET_GAME:
+    case types.RESET_GAME:
       return false;
 
     default:

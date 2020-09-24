@@ -1,11 +1,11 @@
-import { IS_FETCHING, RESET_GAME } from "../Actions/types";
+import { types } from "../Actions/types";
 
 export default (state = false, action) => {
   switch (action.type) {
-    case IS_FETCHING:
+    case types.IS_FETCHING:
       return action.payload;
 
-    case RESET_GAME:
+    case types.RESET_GAME:
       return false;
 
     default:

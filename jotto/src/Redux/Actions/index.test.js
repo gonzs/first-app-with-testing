@@ -6,21 +6,21 @@ import {
   serverError,
   isFetching,
 } from "./";
-import { CORRECT_GUESS, GIVE_UP, IS_FETCHING, SERVER_ERROR } from "./types";
+import types from "./types";
 import moxios from "moxios";
 import { storeFactory } from "../../../test/testUtils";
 
 describe("correctGuess action creator", () => {
   test("returns an action type `CORRECT_GUESS`", () => {
     const action = correctGuess();
-    expect(action).toEqual({ type: CORRECT_GUESS });
+    expect(action).toEqual({ type: types.CORRECT_GUESS });
   });
 });
 
 describe("giveUp creator", () => {
   test("returns an action type `GIVE_UP`", () => {
     const action = giveUp();
-    expect(action).toEqual({ type: GIVE_UP });
+    expect(action).toEqual({ type: types.GIVE_UP });
   });
 });
 
@@ -69,13 +69,13 @@ describe("getSecretWord action creator", () => {
 describe("serverError action creator", () => {
   test("returns an action type `SERVER_ERROR`", () => {
     const action = serverError();
-    expect(action).toEqual({ type: SERVER_ERROR });
+    expect(action).toEqual({ type: types.SERVER_ERROR });
   });
 });
 
 describe("isFetching action creator", () => {
   test("returns an action type `IS_FETCHING`", () => {
     const action = isFetching(true);
-    expect(action).toEqual({ type: IS_FETCHING, payload: true });
+    expect(action).toEqual({ type: types.IS_FETCHING, payload: true });
   });
 });
