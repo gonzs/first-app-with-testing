@@ -1,12 +1,11 @@
 import {
   correctGuess,
-  fetching,
   getSecretWord,
   giveUp,
   serverError,
   isFetching,
 } from "./";
-import types from "./types";
+import { types } from "./types";
 import moxios from "moxios";
 import { storeFactory } from "../../../test/testUtils";
 
