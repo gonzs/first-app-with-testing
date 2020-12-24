@@ -1,10 +1,16 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import { findByTestAttr } from "../../test/testUtils";
 import App from "./";
+import HookActions from "../Actions/HookActions";
+
+const mockGetSecretWord = jest.fn();
 
 const setup = () => {
-  return shallow(<App />);
+  mockGetSecretWord.mockClear();
+  HookActions.getSecretWord = mockGetSecretWord;
+
+  return mount(<App />);
 };
 
 test("App renders without error", () => {
@@ -12,4 +18,12 @@ test("App renders without error", () => {
   const component = findByTestAttr(wrapper, "app-component");
 
   expect(component.length).toBe(1);
+});
+
+describe("getSecretWord calls", () => {
+  test("should call getSecretWord on App mount", () => {
+    const wrapper = setup();
+    console.debug(wrapper);
+    expect(mockGetSecretWord).toHaveBeenCalled();
+  });
 });
