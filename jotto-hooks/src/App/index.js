@@ -1,5 +1,6 @@
 import React from "react";
 import HookActions from "../Actions/HookActions";
+import Input from "../Input";
 import "./App.css";
 
 const SET_SECRET_WORD = "setSecretWord";
@@ -26,7 +27,21 @@ function App() {
     HookActions.getSecretWord(setSecretWord);
   }, []);
 
-  return <div data-test="app-component">{state.secretWord}</div>;
+  if (!state.secretWord) {
+    return (
+      <div className="container" data-test="spinner-component">
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container" data-test="app-component">
+      <Input secretWord={state.secretWord} />
+    </div>
+  );
 }
 
 export default App;
