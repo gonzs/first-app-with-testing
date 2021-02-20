@@ -1,16 +1,22 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import { checkProps, findByTestAttr } from "../../test/testUtils";
 import Input from "./";
+import LanguageContext from "../Context/languageContext";
 
-const defaultProps = { secretWord: "train" };
+const setup = ({ language, secretWord }) => {
+  language = language || "en";
+  secretWord = secretWord || "train";
 
-const setup = (props = defaultProps) => {
-  return shallow(<Input {...props} />);
+  return mount(
+    <LanguageContext.Provider value={language}>
+      <Input secretWord={secretWord} />
+    </LanguageContext.Provider>
+  );
 };
 
 test("renders without error ", () => {
-  const wrapper = setup();
+  const wrapper = setup({});
   const component = findByTestAttr(wrapper, "input-component");
   expect(component.length).toBe(1);
 });
@@ -26,7 +32,7 @@ describe("State controlled input field", () => {
   beforeEach(() => {
     mockSetCurrentGuess.mockClear();
     React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
-    wrapper = setup();
+    wrapper = setup({});
   });
 
   test("state updates with value of input box upon change", () => {
@@ -42,5 +48,27 @@ describe("State controlled input field", () => {
     submitButton.simulate("click", { preventDefault() {} });
 
     expect(mockSetCurrentGuess).toHaveBeenCalledWith("");
+  });
+});
+
+describe("languagePicker", () => {
+  let mockSetCurrentGuess = jest.fn();
+  let wrapper;
+
+  beforeEach(() => {
+    mockSetCurrentGuess.mockClear();
+    React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
+  });
+
+  test("should correctly renders submit string in english", () => {
+    wrapper = setup({ language: "en" });
+    const submitBtn = findByTestAttr(wrapper, "submit-button");
+    expect(submitBtn.text()).toBe("Submit");
+  });
+
+  test("should correctly renders congrats submit in emoji", () => {
+    const wrapper = setup({ language: "emoji" });
+    const submitBtn = findByTestAttr(wrapper, "submit-button");
+    expect(submitBtn.text()).toBe("🚀");
   });
 });

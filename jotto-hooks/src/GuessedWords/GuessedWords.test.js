@@ -84,3 +84,19 @@ describe("if there is custom secret word input", () => {
     expect(component.length).toBe(0);
   });
 });
+
+describe("languagePicker", () => {
+  test("should renders correctly guess instructions string in english by default", () => {
+    const wrapper = setup({ guessedWords: [] });
+    const guessInstructions = findByTestAttr(wrapper, "component-instructions");
+    expect(guessInstructions.text()).toBe("Try to guess the secret word!");
+  });
+
+  test("should renders correctly guess instructions string in emoji", () => {
+    const mockUseContext = jest.fn().mockReturnValue("emoji");
+    React.useContext = mockUseContext;
+    const wrapper = setup({ guessedWords: [] });
+    const guessInstructions = findByTestAttr(wrapper, "component-instructions");
+    expect(guessInstructions.text()).toBe("🤔🤫🆎");
+  });
+});
