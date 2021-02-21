@@ -2,9 +2,13 @@ import React from "react";
 import "./App.css";
 import HookActions from "../Actions/HookActions";
 import languageContext from "../Context/languageContext";
+import successContext from "../Context/successContext";
+import guessedWordsContext from "../Context/guessedWordsContext";
 
-import Input from "../Input";
 import LanguagePicker from "../LanguagePicker";
+import Input from "../Input";
+import Congrats from "../Congrats";
+import GuessedWords from "../GuessedWords";
 
 const SET_SECRET_WORD = "setSecretWord";
 const SET_LANGUAGE = "setLanguage";
@@ -51,7 +55,15 @@ function App() {
       <h1>Jotto</h1>
       <languageContext.Provider value={state.language}>
         <LanguagePicker setLanguage={setLanguage} />
-        <Input secretWord={state.secretWord} />
+
+        <guessedWordsContext.GuessedWordsProvider>
+          <successContext.SuccessProvider>
+            <Congrats />
+            <Input secretWord={state.secretWord} />
+          </successContext.SuccessProvider>
+
+          <GuessedWords />
+        </guessedWordsContext.GuessedWordsProvider>
       </languageContext.Provider>
     </div>
   );
